@@ -52,5 +52,28 @@ class usuarioServicio {
         $this->conexion->close();
         return $result;
     }
+
+    public function validarLogin($username, $password) {
+        // Preparar la consulta para obtener el usuario
+        $query = "SELECT u.idusuario, u.usuario, u.password, u.tipoUsuario, p.nombres, p.apellidos 
+                  FROM usuario u 
+                  INNER JOIN persona p ON u.idusuario = p.idusuario 
+                  WHERE u.usuario = ?";
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows === 1) {
+            $usuario = $result->fetch_assoc();
+    
+            // Comparar contraseñas en texto plano
+            if ($password === $usuario['password']) {
+                return $usuario; // Credenciales válidas
+            }
+        }
+    
+        return false; // Credenciales inválidas
+    }
 }
 ?>

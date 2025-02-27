@@ -1,44 +1,57 @@
 <?php
 session_start();
+require_once 'usuarioServicio.php';
 
-if (isset($_POST['username'])) {
-    /*echo $_POST['txtIDIncidente'];
-    echo $_POST['txtEmpresa'];
-    echo $_POST['txtUsuario'];
-    echo $_POST['txtResumen'];
-    echo $_POST['exampleFormControlTextarea1'];
-    echo $_POST['txtSoporte'];
-    echo $_POST['txtEstado'];*/
-    include('conexion.php');
-    $usuarioServicio = new usuarioServicio; 
-    $request = new stdClass();
-    $request->usuario = $_POST['username'];
-    $request->password = $_POST['password'];
-    echo json_encode($usuarioServicio->validar_login($request));
-    $resultado = $usuarioServicio->validar_login($request);
-    $_SESSION['error'] = !$resultado->success;
-    if ($resultado->success) {
-        $_SESSION['ingreso'] = true;
-        $_SESSION['usuario'] = $resultado->data;
-        header("Location: index.php");
+echo "Procesando formulario...<br>"; // Mensaje de depuración
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST["username"] ?? "";
+    $password = $_POST["password"] ?? "";
+
+    echo "Usuario: $username<br>"; // Mensaje de depuración
+    echo "Contraseña: $password<br>"; // Mensaje de depuración
+
+    if (!empty($username) && !empty($password)) {
+        $servicio = new usuarioServicio();
+        $usuario = $servicio->validarLogin($username, $password);
+
+        if ($usuario) {
+            echo "Credenciales válidas<br>"; // Mensaje de depuración
+            // Credenciales válidas: crear sesión
+            $_SESSION['ingreso'] = true;
+            $_SESSION['usuario'] = (object)[
+                'idusuario' => $usuario['idusuario'],
+                'usuario' => $usuario['usuario'],
+                'tipoUsuario' => $usuario['tipoUsuario'],
+                'nombres' => $usuario['nombres'],
+                'apellidos' => $usuario['apellidos']
+            ];
+
+            // Redirigir al usuario según su tipo
+            if ($usuario['tipoUsuario'] == 'admin') {
+                header("Location: admin.php"); // Página de administrador
+            } else {
+                header("Location: index.php"); // Página principal para clientes
+            }
+            exit();
+        } else {
+            echo "Credenciales inválidas<br>"; // Mensaje de depuración
+            // Credenciales inválidas
+            $_SESSION['error'] = true;
+            header("Location: login.php");
+            exit();
+        }
     } else {
+        echo "Campos vacíos<br>"; // Mensaje de depuración
+        // Campos vacíos
+        $_SESSION['error'] = true;
         header("Location: login.php");
+        exit();
     }
-    
-    // if ($_POST['username'] == 'prueba' && $_POST['password'] == 'prueba') { //Colocar la función que consulte a la BD de usuarios
-	// 	$_SESSION['ingreso'] = true;
-	// 	//setcookie("user", "Jose", time() + 3600, "/"); // + 1 hora
-	// 	//setcookie("user", "Jose", time() + 86400, "/","localhost", false, true); // + 1 día
-    //     $_SESSION['nombreUsuario'] = 'Juan';
-    //     $_SESSION['error'] = false;
-    //     header("Location: agendar.php");
-	// } else {
-    //     $_SESSION['error'] = true;
-    //     header("Location: login.php");
-    // }
-
-} else
-    echo 'NO SE HA ENVIADO'
-
-
+} else {
+    echo "Acceso no autorizado<br>"; // Mensaje de depuración
+    // Acceso no autorizado
+    header("Location: login.php");
+    exit();
+}
 ?>

@@ -37,50 +37,44 @@ session_start();
    <div class="limiter">
 		<div class="container-login100" style="background-image: url('img/fondoLogin.jpg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+
             <form id="valid-usersdsd" method="post" action="procesar.php">
-            <span class="login100-form-title p-b-49">
-						Iniciar Sesion
-					</span>
+    <span class="login100-form-title p-b-49">Iniciar Sesión</span>
 
-                    <div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
-						<span class="label-input100">Usuario</span>
-                        <input class="input100" type="text" name="username" placeholder="Escribe tu usuario">
-                        <span class="focus-input100" data-symbol="&#xf206;"></span>
-                    </div>
-                
-                    <div class="wrap-input100 validate-input" data-validate="Password is required">
-						<span class="label-input100">Contraseña</span>
-                        <input class="input100" type="password" name="password" placeholder="Escribe tu contraseña">
-                        <span class="focus-input100" data-symbol="&#xf190;"></span>
-                    </div>
+    <div class="wrap-input100 validate-input m-b-23" data-validate="Username is required">
+        <span class="label-input100">Usuario</span>
+        <input class="input100" type="text" name="username" placeholder="Escribe tu usuario" required>
+        <span class="focus-input100" data-symbol="&#xf206;"></span>
+    </div>
 
-                    <div class="text-right p-t-8 p-b-31">
-						<a href="#">
-                        Olvidaste la Contraseña?
-						</a>
-                        
-					</div>
-                    
-                    <div class="text-right p-t-8 p-b-31">
-						<a href="#">
-                        Crear Cuenta
-						</a>                       
-					</div>
-                    <div class="text-right p-t-8 p-b-31">
-						<a href="index.php">
-                        Pagina principal
-						</a>
-                        
-					</div>
+    <div class="wrap-input100 validate-input" data-validate="Password is required">
+        <span class="label-input100">Contraseña</span>
+        <input class="input100" type="password" name="password" placeholder="Escribe tu contraseña" required>
+        <span class="focus-input100" data-symbol="&#xf190;"></span>
+    </div>
 
-                    <input  type="submit" value="Ingresar" style="background-color: orange;"  class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft">
+    <div class="text-right p-t-8 p-b-31">
+        <a href="#">¿Olvidaste la Contraseña?</a>
+    </div>
 
-            </form>
-            <script src="js/validar_usuario.js"></script>
+    <div class="text-right p-t-8 p-b-31">
+        <a href="#">Crear Cuenta</a>
+    </div>
+
+    <div class="text-right p-t-8 p-b-31">
+        <a href="index.php">Página principal</a>
+    </div>
+
+    <input type="submit" value="Ingresar" style="background-color: orange;" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft">
+</form>
+
+            
             <?php
-                if (isset($_SESSION['error']) && $_SESSION['error'])
-                    echo "<script>alert('Credenciales incorrectas');</script>"
-            ?>
+if (isset($_SESSION['error']) && $_SESSION['error']) {
+    echo "<script>alert('Credenciales incorrectas'); </script>";
+    unset($_SESSION['error']); // Limpiar el mensaje de error
+}
+?>
         </div>
     </div>
     <div id="dropDownSelect1"></div>

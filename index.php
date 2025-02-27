@@ -1,19 +1,19 @@
 <?php
-    session_start();
-    $usuario = new StdClass();
-    $ingreso = false;
-    if (isset($_SESSION['ingreso'])) {
-        $divStyleIngreso = !$_SESSION['ingreso'] ? 'display: none;' : '';
-        $divStyleNoIngreso = $_SESSION['ingreso'] ? 'display: none;' : '';
-        $usuario = $_SESSION['usuario'];
-        $ingreso = $_SESSION['ingreso'];
-    }
-    else {
-        $divStyleIngreso = 'display: none;';
-        $divStyleNoIngreso = '';
-    }
+session_start();
+$usuario = new StdClass();
+$ingreso = false;
 
+if (isset($_SESSION['ingreso']) && $_SESSION['ingreso']) {
+    $divStyleIngreso = ''; // Mostrar elementos para usuarios logueados
+    $divStyleNoIngreso = 'display: none;'; // Ocultar elementos para usuarios no logueados
+    $usuario = $_SESSION['usuario'];
+    $ingreso = true;
+} else {
+    $divStyleIngreso = 'display: none;'; // Ocultar elementos para usuarios logueados
+    $divStyleNoIngreso = ''; // Mostrar elementos para usuarios no logueados
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -149,14 +149,94 @@
             <div class="container">
                 <div class="row g-4">
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="service-item rounded pt-3">
-                            <div class="p-4">
-                                <i class="fa fa-3x fa-user-tie text-primary mb-4"></i>
-                                <h5>Cocineros</h5>
-                                <p>Los mejores chef en comidas tradicional, mediterranea, vegetariana...</p>
+                        <div class="service-item rounded pt-3" data-bs-toggle="modal" data-bs-target="#chefModal">
+        <div class="p-4">
+            <i class="fa fa-3x fa-user-tie text-primary mb-4"></i>
+            <h5>Cocineros</h5>
+            <p>Los mejores cocineros en comidas tradicional, mediterranea, vegetariana...</p>
+        </div>
+    </div>       
+</div>
+                    <!-- Modal -->
+<div class="modal fade" id="chefModal" tabindex="-1" aria-labelledby="chefModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chefModalLabel">Nuestros Cocineros</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí va el contenido del modal -->
+                <div class="container-xxl pt-5 pb-3">
+                    <div class="container">
+                        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                            <h5 class="section-title ff-secondary text-center text-primary fw-normal">Equipo</h5>
+                            <h1 class="mb-5">Nuestros Cocineros</h1>
+                        </div>
+                        <div class="row g-4">
+                            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="team-item text-center rounded overflow-hidden">
+                                    <div class="rounded-circle overflow-hidden m-4">
+                                        <img class="img-fluid" src="img/team-1.jpg" alt="">
+                                    </div>
+                                    <h5 class="mb-0">Alejandro González</h5>
+                                    <small>Especialidad: Cocina Mexicana Tradicional</small>
+                                    <div class="d-flex justify-content-center mt-3">
+                                        <a class="btn btn-square btn-primary mx-1" href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                                        <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                        <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="team-item text-center rounded overflow-hidden">
+                            <div class="rounded-circle overflow-hidden m-4">
+                                <img class="img-fluid" src="img/team-2.jpg" alt="">
+                            </div>
+                            <h5 class="mb-0">Carlos Ramírez</h5>
+                            <small>Especialidad: Cocina Mediterránea</small>
+                            <div class="d-flex justify-content-center mt-3">
+                                <a class="btn btn-square btn-primary mx-1" href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <div class="team-item text-center rounded overflow-hidden">
+                            <div class="rounded-circle overflow-hidden m-4">
+                                <img class="img-fluid" src="img/team-3.jpg" alt="">
+                            </div>
+                            <h5 class="mb-0">Alberto Quispe</h5>
+                            <small>Especialidad: En postres </small>
+                            <div class="d-flex justify-content-center mt-3">
+                                <a class="btn btn-square btn-primary mx-1" href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <div class="team-item text-center rounded overflow-hidden">
+                            <div class="rounded-circle overflow-hidden m-4">
+                                <img class="img-fluid" src="img/team-4.jpg" alt="">
+                            </div>
+                            <h5 class="mb-0">Guillermo Fernández</h5>
+                            <small>Especialidad: Cocina Vegetariana y Vegana</small>
+                            <div class="d-flex justify-content-center mt-3">
+                                <a class="btn btn-square btn-primary mx-1" href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
                         <div class="service-item rounded pt-3">
                             <div class="p-4">
@@ -615,7 +695,7 @@
 
 
         <!-- Reservation Start -->
-        <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
+        <!--div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
             <div class="row g-0">
                 <div class="col-md-6">
                     <div class="video">
@@ -677,7 +757,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div-->
 
         <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -706,8 +786,8 @@
                     <h5 class="section-title ff-secondary text-center text-primary fw-normal">Equipo</h5>
                     <h1 class="mb-5">Nuestros Cocineros</h1>
                 </div>
-                <div class="row g-4">  
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item text-center rounded overflow-hidden">
                             <div class="rounded-circle overflow-hidden m-4">
                                 <img class="img-fluid" src="img/team-1.jpg" alt="">
@@ -735,7 +815,20 @@
                             </div>
                         </div>
                     </div>
-                                     
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <div class="team-item text-center rounded overflow-hidden">
+                            <div class="rounded-circle overflow-hidden m-4">
+                                <img class="img-fluid" src="img/team-3.jpg" alt="">
+                            </div>
+                            <h5 class="mb-0">Alberto Quispe</h5>
+                            <small>Especialidad: En postres </small>
+                            <div class="d-flex justify-content-center mt-3">
+                                <a class="btn btn-square btn-primary mx-1" href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
                         <div class="team-item text-center rounded overflow-hidden">
                             <div class="rounded-circle overflow-hidden m-4">
@@ -750,7 +843,6 @@
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-primary py-3 px-5 mt-2" href="equipo.php">Mas sobre nuestro equipo</a>
                 </div>
             </div>
         </div>
@@ -859,16 +951,6 @@
                         <p>10AM - 06PM</p>
                     </div>
 
-                    <!---div class="col-lg-3 col-md-6">
-                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Newsletter</h4>
-                        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                        <div class="position-relative mx-auto" style="max-width: 400px;">
-                            <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text"
-                                placeholder="Your email">
-                            <button type="button"
-                                class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                        </div>
-                    </div--->
                 </div>
             </div>
             <div class="container">
