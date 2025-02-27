@@ -144,18 +144,6 @@
                 <label for="message">Mensaje</label>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-check form-check-inline">
-                ¿Seleccione un proveedor de correo?
-                <br><br>
-                <input class="form-check-input" type="radio" id="gmail" name="emailProvider" value="gmail" required>
-                <label for="gmail">Gmail</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="outlook" name="emailProvider" value="outlook" required>
-                <label for="outlook">Outlook</label>
-            </div>
-        </div>
         <div class="col-12">
             <button class="btn btn-primary w-100 py-3" type="submit">Enviar mensaje</button>
         </div>
@@ -254,53 +242,7 @@
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <script>
-  function validarTodo() {
-  const nameInput = document.getElementById("name");
-  const emailInput = document.getElementById("email");
-  const messageInput = document.getElementById("message");
-  const emailProviderInputs = document.getElementsByName("emailProvider");
-  let devolver = true;
 
-  if (nameInput.value.trim() === "") {
-    alert("El campo 'Tu nombre' no debe estar vacío.");
-    devolver = false;
-  }
-
-  if (emailInput.value.trim() === "") {
-    alert("El campo 'Tu correo' no debe estar vacío.");
-    devolver = false;
-  } else if (!validarEmail(emailInput.value)) {
-    alert("El correo no tiene el formato adecuado.");
-    devolver = false;
-  }
-
-  let emailProviderSelected = false;
-  for (const emailProviderInput of emailProviderInputs) {
-    if (emailProviderInput.checked) {
-      emailProviderSelected = true;
-      break;
-    }
-  }
-
-  if (!emailProviderSelected) {
-    alert("Seleccione un proveedor de correo.");
-    devolver = false;
-  }
-
-  if (messageInput.value.trim() === "") {
-    alert("El campo 'Mensaje' no debe estar vacío.");
-    devolver = false;
-  }
-
-  return devolver;
-}
-
-function validarEmail(email) {
-  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,30}$/;
-  return emailPattern.test(email);
-}
-    </script>
 
     <!-- Template Javascript -->
 

@@ -20,27 +20,46 @@ try {
     die("Error de conexión a la base de datos: " . $e->getMessage());
 }
 
+// Función para detectar el proveedor de correo
+function detectarProveedor($email) {
+    if (strpos($email, '@gmail.com') !== false) {
+        return 'gmail';
+    } elseif (strpos($email, '@outlook.com') !== false || strpos($email, '@hotmail.com') !== false) {
+        return 'outlook';
+    } else {
+        return 'desconocido';
+    }
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"] ?? "";
     $email = $_POST["email"] ?? "";
     $message = $_POST["message"] ?? "";
-    $emailProvider = $_POST["emailProvider"] ?? "";
 
-    if (!empty($name) && !empty($email) && !empty($message) && !empty($emailProvider)) {
+    if (!empty($name) && !empty($email) && !empty($message)) {
+        // Detectar el proveedor de correo
+        $emailProvider = detectarProveedor($email);
+
+        if ($emailProvider == 'desconocido') {
+            die("El correo electrónico no es de Gmail ni de Outlook.");
+        }
+
         // Guardar en la base de datos
         try {
             $stmt = $pdo->prepare("INSERT INTO contactos (nombre, correo, mensaje, proveedor) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$name, $email, $message, ucfirst($emailProvider)]); // ucfirst convierte la primera letra en mayúscula
+            $stmt->execute([$name, $email, $message, ucfirst($emailProvider)]);
         } catch (PDOException $e) {
             die("Error al guardar en la base de datos: " . $e->getMessage());
         }
 
-        // Enviar correo electrónico
-        $subject = "Nuevo mensaje de contacto";
-        $messageBody = "Nombre: $name\n";
+        // Enviar correo de confirmación
+        $subject = "CONFIRMACIÓN DE RESERVA";
+        $messageBody = "Hola $name,\n\n";
+        $messageBody .= "Gracias por contactarnos. Aquí están los detalles de tu reserva:\n\n";
+        $messageBody .= "Nombre: $name\n";
         $messageBody .= "Correo: $email\n";
-        $messageBody .= "Proveedor de correo: $emailProvider\n";
-        $messageBody .= "Mensaje:\n$message\n";
+        $messageBody .= "Mensaje:\n$message\n\n";
+        $messageBody .= "¡Esperamos verte pronto!\n";
 
         // Obtener credenciales del proveedor de correo
         $file_path = 'credenciales.json';
@@ -48,8 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $obj = smtpGmail($file_path);
         } else if ($emailProvider == "outlook") {
             $obj = smtpOutlook($file_path);
-        } else {
-            die("Proveedor de correo no válido.");
         }
 
         // Configurar PHPMailer
@@ -63,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Username = $obj->Username;
             $mail->Password = $obj->Password;
 
-            $mail->setFrom($obj->Username, 'Remitente');
+            $mail->setFrom($obj->Username, 'Restaurante'); // Cambia "Restaurante" por el nombre de tu negocio
             $mail->addAddress($email);
 
             $mail->Subject = $subject;
