@@ -1,19 +1,3 @@
-<?php
-session_start();
-$usuario = new StdClass();
-$ingreso = false;
-
-if (isset($_SESSION['ingreso']) && $_SESSION['ingreso']) {
-    $divStyleIngreso = ''; // Mostrar elementos para usuarios logueados
-    $divStyleNoIngreso = 'display: none;'; // Ocultar elementos para usuarios no logueados
-    $usuario = $_SESSION['usuario'];
-    $ingreso = true;
-} else {
-    $divStyleIngreso = 'display: none;'; // Ocultar elementos para usuarios logueados
-    $divStyleNoIngreso = ''; // Mostrar elementos para usuarios no logueados
-}
-?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -94,26 +78,7 @@ if (isset($_SESSION['ingreso']) && $_SESSION['ingreso']) {
                         </div>
             
                         <a href="contact.php" class="nav-item nav-link">Contactos</a>
-                        <?php 
-                                if ($ingreso) {
-                            ?>
-                            <a href="#contact-area" class="nav-item nav-link active" style="color:green" data-section="#contact-area">Opción secreta</a>
-                            <?php }   
-                            ?>
-                        </div>
                         
-                    
-                    <div class="navbar-nav ms-auto py-0 pe-4" >
-                        <?php
-                    echo '<h4 style="width:200px;color:white;top:0.3rem;right:7rem;display: inline-block;'.$divStyleIngreso.'">';
-                    
-                    echo 'BIENVENIDO '.strtoupper($usuario->nombres).'</h4>';
-
-                    echo "<a href='login.php' button".$divStyleNoIngreso."' class='btn btn-primary py-2 px-4' >Iniciar sesión</a>";
-                
-                    echo "<a class='fa fa-sign-out' aria-hidden='true' href='logout.php' style='display: inline-block;color:green;".$divStyleIngreso."'></a>"
-
-                    ?>
                         </div>
 
                     </div>
