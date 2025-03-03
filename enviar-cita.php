@@ -7,14 +7,15 @@ require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 require 'constantes.php';
 
-// Conexión a la base de datos
-$host = 'localhost:3307'; // Cambia si es necesario
-$dbname = 'restaurante'; // Cambia por el nombre de tu base de datos
-$user = 'root'; // Cambia por tu usuario de MySQL
-$password = ''; // Cambia por tu contraseña de MySQL
+// Conexión a la base de datos usando variables de entorno
+$host = getenv('DB_HOST'); // Host de la base de datos
+$dbname = getenv('DB_NAME'); // Nombre de la base de datos
+$user = getenv('DB_USER'); // Usuario de la base de datos
+$password = getenv('DB_PASSWORD'); // Contraseña de la base de datos
+$port = getenv('DB_PORT') ?? '3306'; // Puerto de la base de datos (3306 por defecto)
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $password);
+    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Error de conexión a la base de datos: " . $e->getMessage());
