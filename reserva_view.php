@@ -112,7 +112,7 @@
                         <h1 class="text-white mb-4">Libro de reservaciones online</h1>
 
 
-                        <form method="post" action="reserva.php"> <!-- Este es el formulario principal -->
+                        <form method="post" action="Reserva.php"> <!-- Este es el formulario principal -->
                         <div class="row g-3">
         <div class="col-md-6">
             <div class="form-floating">
