@@ -9,9 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
         'email' => $_POST['email'],
         'datetime' => $_POST['datetime'],
         'select1' => $_POST['select1'],
-        'options1' => $_POST['options1'],
-        'options2' => $_POST['options2'],
-        'options3' => $_POST['options3'],
         'message' => $_POST['message']
     );
 
