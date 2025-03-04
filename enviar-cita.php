@@ -7,6 +7,32 @@ require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 require 'constantes.php';
 
+// Define the smtpGmail function
+function smtpGmail($file_path) {
+    $json = file_get_contents($file_path);
+    $data = json_decode($json);
+    return (object) [
+        'Host' => $data->gmail->Host,
+        'Port' => $data->gmail->Port,
+        'SMTPSecure' => $data->gmail->SMTPSecure,
+        'Username' => $data->gmail->Username,
+        'Password' => $data->gmail->Password
+    ];
+}
+
+// Define the smtpOutlook function
+function smtpOutlook($file_path) {
+    $json = file_get_contents($file_path);
+    $data = json_decode($json);
+    return (object) [
+        'Host' => $data->outlook->Host,
+        'Port' => $data->outlook->Port,
+        'SMTPSecure' => $data->outlook->SMTPSecure,
+        'Username' => $data->outlook->Username,
+        'Password' => $data->outlook->Password
+    ];
+}
+
 // Conexión a la base de datos usando variables de entorno
 $host = getenv('DB_HOST'); // Host de la base de datos
 $dbname = getenv('DB_NAME'); // Nombre de la base de datos
